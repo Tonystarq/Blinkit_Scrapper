@@ -1,0 +1,104 @@
+# Blinkit Scraper Documentation
+
+## Overview
+The Blinkit Scraper is a Python-based web scraping tool designed to extract product data from Blinkit's e-commerce platform. It uses Selenium WebDriver to interact with the website and collect product information across different categories and locations.
+
+## Design Choices
+
+### 1. Technology Stack
+- **Selenium WebDriver**: Chosen for its ability to handle dynamic content and JavaScript-rendered pages
+- **Chrome Headless Mode**: Used for efficient scraping without GUI overhead
+- **CSV for Data Storage**: Simple and efficient format for storing categories and locations
+- **JSON for API Responses**: Handles complex nested data structures from Blinkit's API
+
+### 2. Architecture
+The scraper follows a modular design with the following components:
+- **Data Extraction Module**: Handles parsing of product data from API responses
+- **Category Management**: Reads and processes product categories
+- **Location Management**: Handles different geographical locations
+- **Browser Automation**: Manages Selenium WebDriver interactions
+
+### 3. Synchronization Strategies
+- **Sequential Processing**: Categories and locations are processed sequentially to avoid rate limiting
+- **Explicit Waits**: Uses WebDriverWait for reliable element detection
+- **Sleep Intervals**: Implements strategic delays to handle Cloudflare protection
+- **Progress Tracking**: Uses tqdm for real-time progress monitoring
+
+## Implementation Details
+
+### 1. Data Extraction
+- **Product Data Structure**: Extracts key product information including:
+  - Category hierarchy (L1 and L2)
+  - Product identifiers (store_id, variant_id)
+  - Pricing information (selling_price, MRP)
+  - Stock status and inventory
+  - Brand information
+  - Product images
+
+### 2. Error Handling
+- **Robust Data Parsing**: Handles missing or malformed data gracefully
+- **Nested Structure Processing**: Safely navigates complex JSON structures
+- **Type Checking**: Validates data types before processing
+
+### 3. Performance Considerations
+- **Headless Mode**: Reduces resource usage
+- **Batch Processing**: Processes multiple categories and locations
+- **Progress Tracking**: Provides real-time feedback on scraping progress
+
+## Assumptions and Limitations
+
+### 1. Assumptions
+- Blinkit's API structure remains consistent
+- Categories and locations are provided in CSV format
+- Network connectivity is stable during scraping
+- Cloudflare protection can be bypassed with appropriate delays
+
+### 2. Limitations
+- Rate limiting may affect scraping speed
+- API structure changes may require code updates
+- Cloudflare protection may require additional handling
+- Memory usage increases with large datasets
+
+## Usage Guidelines
+
+1. **Prerequisites**:
+   - Python 3.x
+   - Chrome WebDriver
+   - Required Python packages (selenium, tqdm)
+
+2. **Input Files**:
+   - `blinkit_categories.csv`: Contains category hierarchy
+   - `blinkit_locations.csv`: Contains location coordinates
+
+3. **Output**:
+   - Processed data is saved in the 'output' directory
+   - Timestamp-based file naming for data organization
+
+## Future Improvements
+
+1. **Scalability Enhancements**:
+   - Implement parallel processing
+   - Add proxy rotation
+   - Implement retry mechanisms
+
+2. **Data Quality**:
+   - Add data validation
+   - Implement duplicate detection
+   - Add data cleaning routines
+
+3. **Monitoring**:
+   - Add logging system
+   - Implement error tracking
+   - Add performance metrics
+
+## Security Considerations
+
+1. **Rate Limiting**:
+   - Implement delays between requests
+   - Monitor request frequency
+   - Handle rate limit responses
+
+2. **Data Protection**:
+   - Secure storage of sensitive data
+   - Implement data encryption
+   - Follow data privacy guidelines
